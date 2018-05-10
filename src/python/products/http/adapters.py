@@ -12,5 +12,8 @@ def product_asdict(product: Product) -> Product:
     return {
         'id': product.id,
         'name': product.name,
-        'category_id': product.category_id,
+        'category': {
+            'id': product.category.id,
+            'name': product.category.name,
+        }
     }

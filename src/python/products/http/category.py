@@ -16,7 +16,6 @@ parser.add_argument('name')
 class CategoryApi(Resource):
 
     def __init__(self, *args, ucs=None, **kwargs):
-        print(kwargs)
         self.ucs = ucs
         super().__init__(*args, **kwargs)
 

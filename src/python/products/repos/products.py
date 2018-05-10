@@ -40,6 +40,9 @@ class ProductsRepo(ProductsIfRepo):
         return product_productentitie(product)
 
     def delete(self, product_id: int) -> bool:
-        product = Product.get(Product.id == product_id)
+        try:
+            product = Product.get(Product.id == product_id)
+        except Product.DoesNotExist:
+            raise NotFound
         product.delete_instance()
         return product_productentitie(product)

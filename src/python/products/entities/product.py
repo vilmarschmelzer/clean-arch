@@ -2,6 +2,7 @@ from abc import ABC
 from typing import List
 
 from dataclasses import dataclass
+from .category import Category
 
 
 @dataclass
@@ -9,6 +10,7 @@ class Product:
     name: str
     category_id: str
     id: int = None
+    category: Category = None
 
 
 class ProductsIfRepo(ABC):

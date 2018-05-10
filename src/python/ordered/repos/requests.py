@@ -48,6 +48,9 @@ class RequestsRepo(RequestsIfRepo):
         return request_requestentitie(request)
 
     def delete(self, request_id: int) -> bool:
-        request = Request.get(Request.id == request_id)
+        try:
+            request = Request.get(Request.id == request_id)
+        except Request.DoesNotExist:
+            raise NotFound
         request.delete_instance()
         return request_requestentitie(request)

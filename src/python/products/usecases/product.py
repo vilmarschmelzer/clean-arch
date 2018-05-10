@@ -38,16 +38,26 @@ class ProductUseCases:
             self,
             repo: ProductsIfRepo,
             repo_category: CategoriesIfRepo):
+
         self.repo = repo
         self.repo_category = repo_category
 
     def get_all(self) -> List[Product]:
-        return self.repo.get_all()
+        products = self.repo.get_all()
+
+        for product in products:
+            category = self.repo_category.get(product.category_id)
+            product.category = category
+
+        return products
 
     def get(self, req: GetProductRequest) -> Product:
-        return self.repo.get(req.id)
+        product = self.repo.get(req.id)
+        category = self.repo_category.get(product.category_id)
+        product.category = category
+        return product
 
-    def _exists_category(self, category_id):
+    def _exist_category(self, category_id):
         try:
             self.repo_category.get(category_id)
         except NotFound:
@@ -59,7 +69,7 @@ class ProductUseCases:
             )
 
     def create(self, req: CreateProductRequest) -> Product:
-        self._exists_category(req.category_id)
+        self._exist_category(req.category_id)
         return self.repo.create(
             Product(
                 name=req.name,
@@ -69,11 +79,14 @@ class ProductUseCases:
 
     def update(self, req: UpdateProductRequest) -> Product:
         product = self.repo.get(req.id)
-        self._exists_category(req.category_id)
+        self._exist_category(req.category_id)
 
         product.name = req.name
         product.category_id = req.category_id
+
         self.repo.update(product)
+        category = self.repo_category.get(product.category_id)
+        product.category = category
         return product
 
     def delete(self, req: DeleteProductRequest) -> Product:

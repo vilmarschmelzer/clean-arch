@@ -69,7 +69,6 @@ class RequestUseCases:
         )
 
         for item in request.items:
-            print(item)
             try:
                 product = self.product_client.get(item.product_id)
             except NotFound:

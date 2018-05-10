@@ -20,14 +20,13 @@ parser.add_argument('category_id')
 class ProductApi(Resource):
 
     def __init__(self, *args, ucs=None, **kwargs):
-        print(kwargs)
         self.ucs = ucs
         super().__init__(*args, **kwargs)
 
     def get(self, product_id=None):
         if product_id:
+            request = GetProductRequest(id=product_id)
             try:
-                request = GetProductRequest(id=product_id)
                 return product_asdict(self.ucs.get(request))
             except NotFound:
                 return None, HTTPStatus.NOT_FOUND
@@ -67,12 +66,17 @@ class ProductApi(Resource):
             )
         except BadRequest as ex:
             return ex.payload, HTTPStatus.BAD_REQUEST
+        except NotFound as ex:
+            return None, HTTPStatus.NOT_FOUND
 
     def delete(self, product_id):
-        return product_asdict(
-            self.ucs.delete(
-                DeleteProductRequest(
-                    id=product_id,
+        try:
+            return product_asdict(
+                self.ucs.delete(
+                    DeleteProductRequest(
+                        id=product_id,
+                    )
                 )
             )
-        )
+        except NotFound:
+            return None, HTTPStatus.NOT_FOUND
