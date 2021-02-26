@@ -4,7 +4,7 @@ aiofiles==0.3.2
 marshmallow==2.13.4
 msgpack-python==0.5.1
 passlib==1.7.1
-aiohttp==2.3.7
+aiohttp==3.7.4
 aiomysql==0.0.12
 jinja2==2.10
 motor==1.2.1
