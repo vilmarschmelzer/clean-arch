@@ -14,7 +14,7 @@ PyYAML==3.12
 PyJWT==1.5.3
 PyMySQL==0.8.0
 pytz==2018.3
-Sanic==0.7.0
+Sanic==20.12.6
 setproctitle==1.1.10
 arrow==0.12.1
 flask==0.12.2
