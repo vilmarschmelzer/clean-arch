@@ -16,7 +16,7 @@ PyMySQL==0.8.0
 pytz==2018.3
 Sanic==0.7.0
 setproctitle==1.1.10
-arrow==0.12.1
+arrow==0.15.1
 flask==0.12.2
 ulid-py==0.0.6
 raven==6.5.0
